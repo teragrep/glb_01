@@ -62,7 +62,7 @@ public class QuestionmarkExpression implements Regexable {
 
         final String rv;
         if (b == '?') {
-            rv = ".";
+            rv = "[^/]";
         }
         else {
             byteBuffer.position(mark);

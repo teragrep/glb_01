@@ -72,25 +72,25 @@ public class GlobTest {
     @Test
     public void testGlobQuestionmark() {
         Glob glob = new Glob("test?Questionmark");
-        Assertions.assertEquals("^\\Qtest\\E.\\QQuestionmark\\E$", glob.asRegex());
+        Assertions.assertEquals("^\\Qtest\\E[^/]\\QQuestionmark\\E$", glob.asRegex());
     }
 
     @Test
     public void testGlobQuestionmarkTrailing() {
         Glob glob = new Glob("testQuestionmark?");
-        Assertions.assertEquals("^\\QtestQuestionmark\\E.$", glob.asRegex());
+        Assertions.assertEquals("^\\QtestQuestionmark\\E[^/]$", glob.asRegex());
     }
 
     @Test
     public void testGlobWildcard() {
         Glob glob = new Glob("test*Wildcard");
-        Assertions.assertEquals("^\\Qtest\\E.*\\QWildcard\\E$", glob.asRegex());
+        Assertions.assertEquals("^\\Qtest\\E[^/]*\\QWildcard\\E$", glob.asRegex());
     }
 
     @Test
     public void testGlobWildcardTrailing() {
         Glob glob = new Glob("testWildcard*");
-        Assertions.assertEquals("^\\QtestWildcard\\E.*$", glob.asRegex());
+        Assertions.assertEquals("^\\QtestWildcard\\E[^/]*$", glob.asRegex());
     }
 
     @Test
