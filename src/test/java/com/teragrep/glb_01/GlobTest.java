@@ -129,4 +129,10 @@ public class GlobTest {
         Glob glob = new Glob("testChar[!neg]agtion");
         Assertions.assertEquals("^\\QtestChar\\E[^\\Qneg\\E]\\Qagtion\\E$", glob.asRegex());
     }
+
+    @Test
+    public void testGlobCharacterClassExpressionEscape() {
+        Glob glob = new Glob("[\\]]");
+        Assertions.assertEquals("^[\\Q]\\E]$", glob.asRegex());
+    }
 }

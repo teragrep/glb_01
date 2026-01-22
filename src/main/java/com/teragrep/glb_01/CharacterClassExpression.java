@@ -93,11 +93,18 @@ public class CharacterClassExpression implements Regexable {
         rv = rv.concat("\\Q");
 
         //int numberOfChars = 0;
+        boolean escaping = false;
         while (byteBuffer.hasRemaining()) {
             final byte value = byteBuffer.get();
-            if (value != ']') {
+
+            if (value == '\\') {
+                // escapes are skipped, because regex quotation takes literals
+                escaping = true;
+                continue;
+            }
+
+            if (value != ']' || escaping) {
                 //numberOfChars++;
-                // TODO support escaped \]
                 rv = rv.concat(new String(new byte[] {
                         value
                 }));
@@ -106,6 +113,8 @@ public class CharacterClassExpression implements Regexable {
                 byteBuffer.position(byteBuffer.position() - 1); // revert close bracket read
                 break;
             }
+
+            escaping = false;
         }
 
         rv = rv.concat("\\E");
