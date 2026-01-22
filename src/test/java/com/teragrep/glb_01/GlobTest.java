@@ -48,56 +48,6 @@ package com.teragrep.glb_01;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-/*
-
-The glob package implements following antlr4 grammar in prue java
-
-grammar Glob;
-
-root // Glob.java
-    : rootSequence EOF
-    ;
-
-rootSequence // RootSequence.java
-    : (element | COMMA)*
-    ;
-
-
-element
-    : braceExp      // BraceExpression.java
-    | charClass     // CharacterClassExpression.java
-    | WILDCARD      // WildcardExpression.java
-    | QUESTION      // QuestionMarkExpression.java
-    | ESCAPED       // EscapeExpression.java
-    | TEXT          // Text.java
-    ;
-
-braceExp
-    : LBRACE element* (COMMA element*)* RBRACE
-    ;
-
-charClass
-    : LBRACK BANG? CLASS_CONTENT+ RBRACK
-    ;
-
-// --- Lexer Rules ---
-
-ESCAPED : '\\' . ;
-WILDCARD: '*' ;
-QUESTION: '?' ;
-LBRACK  : '[' ;
-RBRACK  : ']' ;
-LBRACE  : '{' ;
-RBRACE  : '}' ;
-COMMA   : ',' ;
-BANG    : '!' ;
-
-// Note: COMMA (,) is still excluded from TEXT so it creates a distinct token
-TEXT    : ~[\\*?\[\]{},]+ ;
-CLASS_CONTENT : ~[\]\\] | '\\' . ;
-
- */
-
 public class GlobTest {
 
     @Test
