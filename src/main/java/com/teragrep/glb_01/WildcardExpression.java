@@ -66,7 +66,7 @@ public class WildcardExpression implements Regexable {
         }
         else {
             byteBuffer.position(mark);
-            throw new IllegalArgumentException();
+            throw new NoMatchException("not a wildcard expression");
         }
 
         return rv;

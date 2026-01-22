@@ -73,7 +73,7 @@ public class Text implements Regexable {
         if (slice.position() == 0) {
             // nothing read
             //System.out.println("TEXT goes out empty");
-            throw new IllegalArgumentException();
+            throw new NoMatchException("no content for text expression");
         }
 
         // advance the original buffer by the amount text consumed

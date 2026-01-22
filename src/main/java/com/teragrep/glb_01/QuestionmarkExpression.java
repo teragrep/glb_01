@@ -66,7 +66,7 @@ public class QuestionmarkExpression implements Regexable {
         }
         else {
             byteBuffer.position(mark);
-            throw new IllegalArgumentException();
+            throw new NoMatchException("not a questionmark expression");
         }
         //System.out.println("QUESTIONMARK returns " + rv);
         return rv;

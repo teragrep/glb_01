@@ -72,12 +72,12 @@ public class Element implements Regexable {
                 //System.out.println("Element returning " + out);
                 return out;
             }
-            catch (IllegalArgumentException ignored) {
+            catch (NoMatchException ignored) {
                 //System.out.println("ELEMENT ignored ");
             }
         }
         //System.out.println("ELEMENT throws ");
-        throw new IllegalArgumentException();
+        throw new NoMatchException("not a valid element");
     }
 
 }

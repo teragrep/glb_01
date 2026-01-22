@@ -74,7 +74,7 @@ public class RootSequence implements Regexable {
                     rv = rv.concat(regexable.asRegex());
                     //System.out.println(rv);
                 }
-                catch (IllegalArgumentException ignored) {
+                catch (NoMatchException ignored) {
                     //System.out.println("EXCEEE");
                 }
             }

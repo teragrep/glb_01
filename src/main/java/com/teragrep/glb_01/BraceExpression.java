@@ -64,12 +64,12 @@ public class BraceExpression implements Regexable {
         String rv = "";
         try {
             if (!byteBuffer.hasRemaining()) {
-                throw new IllegalStateException();
+                throw new NoMatchException("not enough content for brace expression");
             }
             final byte braceOpen = byteBuffer.get();
 
             if (braceOpen != '{') {
-                throw new IllegalArgumentException();
+                throw new NoMatchException("No opening brace");
             }
             else {
                 rv = rv.concat("(");
@@ -83,30 +83,28 @@ public class BraceExpression implements Regexable {
                         if (comma != ',') {
                             //System.out.println("not comma");
                             byteBuffer.position(byteBuffer.position() - 1);
-                            throw new IllegalArgumentException();
+                            throw new NoMatchException("No brace continuation");
                         }
                         else {
                             rv = rv.concat("|");
                         }
                         if (!byteBuffer.hasRemaining()) {
-                            //System.out.println("no content after comma");
-                            throw new IllegalArgumentException();
+                            throw new NoMatchException("brace expression continuation incomplete");
                         }
                         else {
                             rv = rv.concat(element.asRegex());
                         }
                     }
                 }
-                catch (IllegalArgumentException e) {
-                    //System.out.println("Brace catching");
+                catch (NoMatchException e) {
                     if (!byteBuffer.hasRemaining()) {
-                        throw new IllegalArgumentException(); // missing close brace
+                        throw new NoMatchException("content ends before closing brace"); // missing close brace
                     }
                     final byte braceClose = byteBuffer.get();
 
                     if (braceClose != '}') {
                         byteBuffer.position(byteBuffer.position() - 1);
-                        throw new IllegalArgumentException();
+                        throw new NoMatchException("content has no closing brace");
                     }
                     else {
                         rv = rv.concat(")");
@@ -115,10 +113,9 @@ public class BraceExpression implements Regexable {
                 }
             }
         }
-        catch (IllegalArgumentException e) {
-            //System.out.println("Brace catching top, not a braceExpression");
+        catch (NoMatchException e) {
             byteBuffer.position(mark);
-            throw e;
+            throw new NoMatchException("not a brace expression");
         }
 
         // TODO make empty throw IllegalStateException

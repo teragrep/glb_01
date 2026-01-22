@@ -62,21 +62,21 @@ public class CharacterClassExpression implements Regexable {
 
         String rv = "";
         if (!byteBuffer.hasRemaining()) {
-            throw new IllegalArgumentException();
+            throw new NoMatchException("not enought content for character class expression");
         }
 
         final byte openBracket = byteBuffer.get();
 
         if (openBracket != '[') {
             byteBuffer.position(mark);
-            throw new IllegalArgumentException();
+            throw new NoMatchException("has no open bracket");
         }
         rv = rv.concat("[");
 
         // is bang
         if (!byteBuffer.hasRemaining()) {
             byteBuffer.position(mark);
-            throw new IllegalArgumentException();
+            throw new NoMatchException("not enough content for bang or closing bracket");
         }
 
         final byte b = byteBuffer.get();
@@ -97,6 +97,7 @@ public class CharacterClassExpression implements Regexable {
             final byte value = byteBuffer.get();
             if (value != ']') {
                 //numberOfChars++;
+                // TODO support escaped \]
                 rv = rv.concat(new String(new byte[] {
                         value
                 }));
@@ -117,7 +118,7 @@ public class CharacterClassExpression implements Regexable {
         final byte closeBracket = byteBuffer.get();
         if (closeBracket != ']') {
             byteBuffer.position(mark);
-            throw new IllegalArgumentException();
+            throw new NoMatchException("no closing bracket");
         }
 
         rv = rv.concat("]");

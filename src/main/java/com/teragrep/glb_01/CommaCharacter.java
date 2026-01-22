@@ -65,9 +65,8 @@ public class CommaCharacter implements Regexable {
         }
         else {
             byteBuffer.position(mark);
-            throw new IllegalArgumentException();
+            throw new NoMatchException("not a comma character");
         }
-        //System.out.println("COMMA returns " + rv);
         return rv;
     }
 }
