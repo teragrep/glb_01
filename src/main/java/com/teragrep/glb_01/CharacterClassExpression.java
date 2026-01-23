@@ -49,14 +49,11 @@ import java.nio.ByteBuffer;
 
 public class CharacterClassExpression implements Regexable {
 
-    private final ByteBuffer byteBuffer;
-
-    public CharacterClassExpression(final ByteBuffer byteBuffer) {
-        this.byteBuffer = byteBuffer;
+    public CharacterClassExpression() {
     }
 
     @Override
-    public String asRegex() {
+    public String asRegex(final ByteBuffer byteBuffer) {
 
         final int mark = byteBuffer.position();
 

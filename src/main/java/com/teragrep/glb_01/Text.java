@@ -50,14 +50,12 @@ import java.nio.charset.StandardCharsets;
 
 public class Text implements Regexable {
 
-    private final ByteBuffer byteBuffer;
+    public Text() {
 
-    public Text(final ByteBuffer byteBuffer) {
-        this.byteBuffer = byteBuffer;
     }
 
     @Override
-    public String asRegex() {
+    public String asRegex(final ByteBuffer byteBuffer) {
         //System.out.println("TEXT regexing " + byteBuffer.position());
         final ByteBuffer slice = byteBuffer.slice();
 

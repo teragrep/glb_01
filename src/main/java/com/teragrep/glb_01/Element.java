@@ -53,22 +53,22 @@ public class Element implements Regexable {
 
     private final List<Regexable> regexables;
 
-    public Element(final ByteBuffer byteBuffer) {
+    public Element() {
         this.regexables = new ArrayList<>();
 
-        regexables.add(new BraceExpression(byteBuffer, this));
-        regexables.add(new CharacterClassExpression(byteBuffer));
-        regexables.add(new WildcardExpression(byteBuffer));
-        regexables.add(new QuestionmarkExpression(byteBuffer));
-        regexables.add(new EscapeExpression(byteBuffer));
-        regexables.add(new Text(byteBuffer));
+        regexables.add(new BraceExpression(this));
+        regexables.add(new CharacterClassExpression());
+        regexables.add(new WildcardExpression());
+        regexables.add(new QuestionmarkExpression());
+        regexables.add(new EscapeExpression());
+        regexables.add(new Text());
     }
 
     @Override
-    public String asRegex() {
+    public String asRegex(final ByteBuffer byteBuffer) {
         for (Regexable regexable : regexables) {
             try {
-                final String out = regexable.asRegex();
+                final String out = regexable.asRegex(byteBuffer);
                 //System.out.println("Element returning " + out);
                 return out;
             }

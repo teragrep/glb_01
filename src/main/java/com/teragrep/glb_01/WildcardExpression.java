@@ -49,14 +49,11 @@ import java.nio.ByteBuffer;
 
 public class WildcardExpression implements Regexable {
 
-    private final ByteBuffer byteBuffer;
-
-    public WildcardExpression(final ByteBuffer byteBuffer) {
-        this.byteBuffer = byteBuffer;
+    public WildcardExpression() {
     }
 
     @Override
-    public String asRegex() {
+    public String asRegex(final ByteBuffer byteBuffer) {
         final int mark = byteBuffer.position();
         final byte b = byteBuffer.get();
 

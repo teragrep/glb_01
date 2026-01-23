@@ -49,13 +49,11 @@ import java.nio.ByteBuffer;
 
 public class QuestionmarkExpression implements Regexable {
 
-    private ByteBuffer byteBuffer;
-
-    public QuestionmarkExpression(final ByteBuffer byteBuffer) {
-        this.byteBuffer = byteBuffer;
+    public QuestionmarkExpression() {
     }
 
-    public String asRegex() {
+    @Override
+    public String asRegex(final ByteBuffer byteBuffer) {
         final int mark = byteBuffer.position();
 
         final byte b = byteBuffer.get();

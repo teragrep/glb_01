@@ -49,14 +49,11 @@ import java.nio.ByteBuffer;
 
 public class EOF implements Regexable {
 
-    private final ByteBuffer byteBuffer;
-
-    public EOF(final ByteBuffer byteBuffer) {
-        this.byteBuffer = byteBuffer;
+    public EOF() {
     }
 
     @Override
-    public String asRegex() {
+    public String asRegex(final ByteBuffer byteBuffer) {
         if (byteBuffer.hasRemaining()) {
             throw new IllegalStateException("not all characters were consumed, left " + byteBuffer.remaining());
         }

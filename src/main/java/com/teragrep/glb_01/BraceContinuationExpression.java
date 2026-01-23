@@ -49,16 +49,14 @@ import java.nio.ByteBuffer;
 
 public class BraceContinuationExpression implements Regexable {
 
-    private final ByteBuffer byteBuffer;
     private final Element element;
 
-    public BraceContinuationExpression(final ByteBuffer byteBuffer, final Element element) {
-        this.byteBuffer = byteBuffer;
+    public BraceContinuationExpression(final Element element) {
         this.element = element;
     }
 
     @Override
-    public String asRegex() {
+    public String asRegex(final ByteBuffer byteBuffer) {
         final int mark = byteBuffer.position();
 
         String rv = "";
@@ -79,7 +77,7 @@ public class BraceContinuationExpression implements Regexable {
             throw new NoMatchException("brace continuation expression continuation incomplete");
         }
         else {
-            rv = rv.concat(element.asRegex());
+            rv = rv.concat(element.asRegex(byteBuffer));
         }
 
         return rv;

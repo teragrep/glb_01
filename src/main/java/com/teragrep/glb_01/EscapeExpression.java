@@ -49,14 +49,11 @@ import java.nio.ByteBuffer;
 
 public class EscapeExpression implements Regexable {
 
-    private final ByteBuffer byteBuffer;
-
-    public EscapeExpression(final ByteBuffer byteBuffer) {
-        this.byteBuffer = byteBuffer;
+    public EscapeExpression() {
     }
 
     @Override
-    public String asRegex() {
+    public String asRegex(final ByteBuffer byteBuffer) {
         String rv = "";
         if (!byteBuffer.hasRemaining()) {
             throw new NoMatchException("not enough content for escape expression"); // empty

@@ -51,19 +51,17 @@ import java.util.List;
 
 public class RootSequence implements Regexable {
 
-    private final ByteBuffer byteBuffer;
     private final List<Regexable> regexables;
 
-    public RootSequence(final ByteBuffer byteBuffer) {
-        this.byteBuffer = byteBuffer;
+    public RootSequence() {
         this.regexables = new ArrayList<>();
         // top level comma
-        this.regexables.add(new Element(this.byteBuffer));
-        this.regexables.add(new CommaCharacter(this.byteBuffer));
+        this.regexables.add(new Element());
+        this.regexables.add(new CommaCharacter());
     }
 
     @Override
-    public String asRegex() {
+    public String asRegex(final ByteBuffer byteBuffer) {
         String rv = "";
         while (byteBuffer.hasRemaining()) {
             for (Regexable regexable : regexables) {
@@ -71,7 +69,7 @@ public class RootSequence implements Regexable {
                     break;
                 }
                 try {
-                    rv = rv.concat(regexable.asRegex());
+                    rv = rv.concat(regexable.asRegex(byteBuffer));
                     //System.out.println(rv);
                 }
                 catch (NoMatchException ignored) {

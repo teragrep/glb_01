@@ -50,7 +50,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Glob implements Regexable {
+public class Glob {
 
     private final String pattern;
     private final ByteBuffer byteBuffer;
@@ -64,16 +64,15 @@ public class Glob implements Regexable {
 
         this.regexables = new ArrayList<>();
         // top level comma
-        this.regexables.add(new RootSequence(byteBuffer));
-        this.regexables.add(new EOF(byteBuffer));
+        this.regexables.add(new RootSequence());
+        this.regexables.add(new EOF());
     }
 
-    @Override
     public String asRegex() {
 
         String rv = "^";
         for (Regexable regexable : regexables) {
-            rv = rv.concat(regexable.asRegex());
+            rv = rv.concat(regexable.asRegex(byteBuffer));
         }
 
         //System.out.println("GLOB returns " + rv);

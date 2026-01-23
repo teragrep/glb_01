@@ -45,7 +45,9 @@
  */
 package com.teragrep.glb_01;
 
+import java.nio.ByteBuffer;
+
 public abstract interface Regexable {
 
-    public abstract String asRegex();
+    public abstract String asRegex(ByteBuffer byteBuffer);
 }

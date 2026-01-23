@@ -49,14 +49,11 @@ import java.nio.ByteBuffer;
 
 public class CommaCharacter implements Regexable {
 
-    private final ByteBuffer byteBuffer;
-
-    public CommaCharacter(final ByteBuffer byteBuffer) {
-        this.byteBuffer = byteBuffer;
+    public CommaCharacter() {
     }
 
     @Override
-    public String asRegex() {
+    public String asRegex(final ByteBuffer byteBuffer) {
         final int mark = byteBuffer.position();
 
         final String rv;
