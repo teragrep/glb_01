@@ -52,93 +52,93 @@ public class GlobTest {
 
     @Test
     public void testGlobText() {
-        Glob glob = new Glob("testText");
+        Glob glob = new GlobImpl("testText");
 
         Assertions.assertEquals("^\\QtestText\\E$", glob.asRegex());
     }
 
     @Test
     public void testGlobComma() {
-        Glob glob = new Glob("some,Other");
+        Glob glob = new GlobImpl("some,Other");
         Assertions.assertEquals("^\\Qsome\\E,\\QOther\\E$", glob.asRegex());
     }
 
     @Test
     public void testGlobCommaTrailing() {
-        Glob glob = new Glob("some,Other,");
+        Glob glob = new GlobImpl("some,Other,");
         Assertions.assertEquals("^\\Qsome\\E,\\QOther\\E,$", glob.asRegex());
     }
 
     @Test
     public void testGlobQuestionmark() {
-        Glob glob = new Glob("test?Questionmark");
+        Glob glob = new GlobImpl("test?Questionmark");
         Assertions.assertEquals("^\\Qtest\\E[^/]\\QQuestionmark\\E$", glob.asRegex());
     }
 
     @Test
     public void testGlobQuestionmarkTrailing() {
-        Glob glob = new Glob("testQuestionmark?");
+        Glob glob = new GlobImpl("testQuestionmark?");
         Assertions.assertEquals("^\\QtestQuestionmark\\E[^/]$", glob.asRegex());
     }
 
     @Test
     public void testGlobWildcard() {
-        Glob glob = new Glob("test*Wildcard");
+        Glob glob = new GlobImpl("test*Wildcard");
         Assertions.assertEquals("^\\Qtest\\E[^/]*\\QWildcard\\E$", glob.asRegex());
     }
 
     @Test
     public void testGlobWildcardTrailing() {
-        Glob glob = new Glob("testWildcard*");
+        Glob glob = new GlobImpl("testWildcard*");
         Assertions.assertEquals("^\\QtestWildcard\\E[^/]*$", glob.asRegex());
     }
 
     @Test
     public void testGlobBraceSimpleExpression() {
-        Glob glob = new Glob("testBrace{Simple}Expression");
+        Glob glob = new GlobImpl("testBrace{Simple}Expression");
         Assertions.assertEquals("^\\QtestBrace\\E(\\QSimple\\E)\\QExpression\\E$", glob.asRegex());
     }
 
     @Test
     public void testGlobBraceExpression() {
-        Glob glob = new Glob("test{More,Some}BraceExpression");
+        Glob glob = new GlobImpl("test{More,Some}BraceExpression");
         Assertions.assertEquals("^\\Qtest\\E(\\QMore\\E|\\QSome\\E)\\QBraceExpression\\E$", glob.asRegex());
     }
 
     @Test
     public void testGlobBraceNestedExpression() {
-        Glob glob = new Glob("testBrace{Bar,{Foo,Biz}}BraceExpression");
+        Glob glob = new GlobImpl("testBrace{Bar,{Foo,Biz}}BraceExpression");
         Assertions
                 .assertEquals("^\\QtestBrace\\E(\\QBar\\E|(\\QFoo\\E|\\QBiz\\E))\\QBraceExpression\\E$", glob.asRegex());
     }
 
     @Test
     public void testGlobBraceMultipleContinuationExpressions() {
-        Glob glob = new Glob("x{a,b,c}y");
+        Glob glob = new GlobImpl("x{a,b,c}y");
         Assertions.assertEquals("^\\Qx\\E(\\Qa\\E|\\Qb\\E|\\Qc\\E)\\Qy\\E$", glob.asRegex());
     }
 
     @Test
     public void testGlobEscapeExpression() {
-        Glob glob = new Glob("test\\{Escape\\}Expressio\\n");
+        Glob glob = new GlobImpl("test\\{Escape\\}Expressio\\n");
         Assertions.assertEquals("^\\Qtest\\E\\{\\QEscape\\E\\}\\QExpressio\\E\\n$", glob.asRegex());
     }
 
     @Test
     public void testGlobCharacterClassExpression() {
-        Glob glob = new Glob("testChar[act]erClassExpression");
+        Glob glob = new GlobImpl("testChar[act]erClassExpression");
         Assertions.assertEquals("^\\QtestChar\\E[\\Qact\\E]\\QerClassExpression\\E$", glob.asRegex());
     }
 
     @Test
     public void testGlobCharacterClassExpressionNegation() {
-        Glob glob = new Glob("testChar[!neg]agtion");
+        Glob glob = new GlobImpl("testChar[!neg]agtion");
         Assertions.assertEquals("^\\QtestChar\\E[^\\Qneg\\E]\\Qagtion\\E$", glob.asRegex());
     }
 
     @Test
     public void testGlobCharacterClassExpressionEscape() {
-        Glob glob = new Glob("[\\]]");
+        Glob glob = new GlobImpl("[\\]]");
         Assertions.assertEquals("^[\\Q]\\E]$", glob.asRegex());
     }
 }

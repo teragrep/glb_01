@@ -70,14 +70,11 @@ public class RootSequence implements Regexable {
                 }
                 try {
                     rv = rv.concat(regexable.asRegex(byteBuffer));
-                    //System.out.println(rv);
                 }
                 catch (NoMatchException ignored) {
-                    //System.out.println("EXCEEE");
                 }
             }
         }
-        //System.out.println("ROOTSEQUENCE returns "  + rv);
         return rv;
     }
 }

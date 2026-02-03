@@ -56,7 +56,6 @@ public class Text implements Regexable {
 
     @Override
     public String asRegex(final ByteBuffer byteBuffer) {
-        //System.out.println("TEXT regexing " + byteBuffer.position());
         final ByteBuffer slice = byteBuffer.slice();
 
         while (slice.hasRemaining()) {
@@ -70,7 +69,6 @@ public class Text implements Regexable {
 
         if (slice.position() == 0) {
             // nothing read
-            //System.out.println("TEXT goes out empty");
             throw new NoMatchException("no content for text expression");
         }
 
@@ -84,8 +82,6 @@ public class Text implements Regexable {
         rv = rv.concat(new String(bytes, StandardCharsets.UTF_8));
         rv = rv.concat("\\E");
 
-        //System.out.println("TEXT returns " + rv);
-        //System.out.println("TEXT returns " + byteBuffer.position());
         return rv;
     }
 

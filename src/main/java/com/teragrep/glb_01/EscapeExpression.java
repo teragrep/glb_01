@@ -56,19 +56,19 @@ public class EscapeExpression implements Regexable {
     public String asRegex(final ByteBuffer byteBuffer) {
         String rv = "";
         if (!byteBuffer.hasRemaining()) {
-            throw new NoMatchException("not enough content for escape expression"); // empty
+            throw new NoMatchException("not enough content for escape expression");
         }
 
         final byte escape = byteBuffer.get();
 
         if (escape != '\\') {
             byteBuffer.position(byteBuffer.position() - 1);
-            throw new NoMatchException("not an escape expression"); // not escape
+            throw new NoMatchException("not an escape expression");
         }
         rv = rv.concat("\\");
 
         if (!byteBuffer.hasRemaining()) {
-            throw new NoMatchException("only escape without escaped character"); // nothing to escape
+            throw new NoMatchException("only escape without escaped character");
         }
         final byte value = byteBuffer.get();
         rv = rv.concat(new String(new byte[] {

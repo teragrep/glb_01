@@ -116,11 +116,6 @@ public class CharacterClassExpression implements Regexable {
 
         rv = rv.concat("\\E");
 
-        /*
-        if (numberOfChars == 0) {
-            throw new IllegalStateException(); // empty are not permitted
-        }
-         */
         final byte closeBracket = byteBuffer.get();
         if (closeBracket != ']') {
             byteBuffer.position(mark);

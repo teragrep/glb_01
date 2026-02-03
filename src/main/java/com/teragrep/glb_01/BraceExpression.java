@@ -85,7 +85,7 @@ public class BraceExpression implements Regexable {
                 }
                 catch (NoMatchException e) {
                     if (!byteBuffer.hasRemaining()) {
-                        throw new NoMatchException("content ends before closing brace"); // missing close brace
+                        throw new NoMatchException("content ends before closing brace");
                     }
                     final byte braceClose = byteBuffer.get();
 

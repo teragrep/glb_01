@@ -46,36 +46,35 @@
 package com.teragrep.glb_01;
 
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.List;
 
-public class Element implements Regexable {
+public class GlobImpl implements Glob {
 
+    private final String pattern;
     private final List<Regexable> regexables;
 
-    public Element() {
-        this.regexables = new ArrayList<>();
+    public GlobImpl(final String pattern) {
+        this(pattern, Arrays.asList(new RootSequence(), new EOF()));
+    }
 
-        regexables.add(new BraceExpression(this));
-        regexables.add(new CharacterClassExpression());
-        regexables.add(new WildcardExpression());
-        regexables.add(new QuestionmarkExpression());
-        regexables.add(new EscapeExpression());
-        regexables.add(new Text());
+    private GlobImpl(final String pattern, final List<Regexable> regexables) {
+        this.pattern = pattern;
+        this.regexables = regexables;
     }
 
     @Override
-    public String asRegex(final ByteBuffer byteBuffer) {
+    public String asRegex() {
+        final byte[] bytes = pattern.getBytes(StandardCharsets.UTF_8);
+        final ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
+
+        String rv = "^";
         for (Regexable regexable : regexables) {
-            try {
-                final String out = regexable.asRegex(byteBuffer);
-                return out;
-            }
-            catch (NoMatchException ignored) {
-
-            }
+            rv = rv.concat(regexable.asRegex(byteBuffer));
         }
-        throw new NoMatchException("not a valid element");
-    }
 
+        rv = rv.concat("$");
+        return rv;
+    }
 }

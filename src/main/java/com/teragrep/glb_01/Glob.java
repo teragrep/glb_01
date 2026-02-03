@@ -45,36 +45,8 @@
  */
 package com.teragrep.glb_01;
 
-import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
+public interface Glob {
 
-public class Glob {
+    String asRegex();
 
-    private final String pattern;
-    private final List<Regexable> regexables;
-
-    public Glob(final String pattern) {
-        this.pattern = pattern;
-
-        this.regexables = new ArrayList<>();
-        // top level comma
-        this.regexables.add(new RootSequence());
-        this.regexables.add(new EOF());
-    }
-
-    public String asRegex() {
-        final byte[] bytes = pattern.getBytes(StandardCharsets.UTF_8);
-        final ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
-
-        String rv = "^";
-        for (Regexable regexable : regexables) {
-            rv = rv.concat(regexable.asRegex(byteBuffer));
-        }
-
-        //System.out.println("GLOB returns " + rv);
-        rv = rv.concat("$");
-        return rv;
-    }
 }
