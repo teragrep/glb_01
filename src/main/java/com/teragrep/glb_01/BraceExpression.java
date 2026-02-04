@@ -107,8 +107,6 @@ public final class BraceExpression implements Regexable {
             throw new NoMatchException("not a brace expression");
         }
 
-        // TODO make empty throw IllegalStateException
-
         return rv;
     }
 
