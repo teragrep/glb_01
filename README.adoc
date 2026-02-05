@@ -1,17 +1,17 @@
-// Before publishing your new repository:
-// 1. Write the readme file
-// 2. Update the issues link in Contributing section in the readme file
-// 3. Update the discussion link in config.yml file in .github/ISSUE_TEMPLATE directory
+= Teragrep GlobToRegex Library for Java
 
-= repo-template
-
-// Add a short description of your project. Tell what your project does and what it's used for.
-
-This is a template repository for Teragrep organization.
+Teragrep GlobToRegex Library converts a https://en.wikipedia.org/wiki/Glob_(programming)[Glob pattern] into Java https://en.wikipedia.org/wiki/Regular_expression[regular expression].
 
 == Features
 
-// List your project's features
+Conversion supports following Glob expressions:
+- Alternatives with nesting support (Braces)
+- Character classes with negations (Brackets)
+- Escapes (Backslashes)
+- Wildcard characters (Questionmarks)
+- Wildcard matches (Stars)
+- Text into regex quotation
+
 
 == Documentation
 
@@ -19,17 +19,75 @@ See the official documentation on https://docs.teragrep.com[docs.teragrep.com].
 
 == Limitations
 
-// If your project has limitations, please list them. Otherwise remove this section.
+It is a pure Java implementation of following grammar and is bit hard to read.
+
+[source,antlr4]
+----
+
+grammar Glob;
+
+root // Glob.java
+    : rootSequence EOF
+    ;
+
+rootSequence // RootSequence.java
+    : (element | COMMA)*
+    ;
+
+
+element
+    : braceExp      // BraceExpression.java
+    | charClass     // CharacterClassExpression.java
+    | WILDCARD      // WildcardExpression.java
+    | QUESTION      // QuestionMarkExpression.java
+    | ESCAPED       // EscapeExpression.java
+    | TEXT          // Text.java
+    ;
+
+braceExp
+    : LBRACE element* (COMMA element*)* RBRACE
+    ;
+
+charClass
+    : LBRACK BANG? CLASS_CONTENT+ RBRACK
+    ;
+
+// --- Lexer Rules ---
+
+ESCAPED : '\\' . ;
+WILDCARD: '*' ;
+QUESTION: '?' ;
+LBRACK  : '[' ;
+RBRACK  : ']' ;
+LBRACE  : '{' ;
+RBRACE  : '}' ;
+COMMA   : ',' ;
+BANG    : '!' ;
+
+TEXT    : ~[\\*?\[\]{},]+ ;
+CLASS_CONTENT : ~[\]\\] | '\\' . ;
+----
+
 
 == How to [compile/use/implement]
 
-// add instructions how people can start to use your project
+=== Usage
+
+[source,java]
+----
+import com.teragrep.glb_01.Glob;import com.teragrep.glb_01.GlobImpl;
+
+Glob glob = new GlobImpl("test*Wildcard");
+String regex = glob.asRegex();
+System.out.println(regex); // Results into ^\Qtest\E.*\QWildcard\E$
+----
+
 
 == Contributing
 
 // Change the repository name in the issues link to match with your project's name
 
-You can involve yourself with our project by https://github.com/teragrep/repo-template/issues/new/choose[opening an issue] or submitting a pull request.
+You can involve yourself with our project by https://github.com/teragrep/glb_01/issues/new/choose[opening an issue] or submitting a pull request.
 
 Contribution requirements:
 
