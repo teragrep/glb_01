@@ -72,6 +72,7 @@ public final class RootSequence implements Regexable {
                     rv = rv.concat(regexable.asRegex(byteBuffer));
                 }
                 catch (NoMatchException ignored) {
+                    // not match is ignored
                 }
             }
         }

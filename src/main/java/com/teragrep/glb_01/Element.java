@@ -72,7 +72,7 @@ public final class Element implements Regexable {
                 return out;
             }
             catch (NoMatchException ignored) {
-
+                // not match is ignored
             }
         }
         throw new NoMatchException("not a valid element");
